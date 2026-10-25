@@ -37,6 +37,24 @@ def frame_collector (frame_collected):
     frameRgb = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB,data=frameRgb)
     detection_result = detector.detect(mp_image)
+    lm_data=[]
     if detection_result.hand_landmarks :
         for hand_landmarks in detection_result.hand_landmarks:
          draw_hand(frame,hand_landmarks)
+         
+         hand_data=[]
+         for lm in hand_landmarks:
+             hand_data.append([lm.x,lm.y,lm.z])
+        
+         result_collection(hand_data,lm_data)
+    
+
+    return lm_data     
+                
+
+    
+def result_collection(hand_data,lm_data):
+    lm_data.append(hand_data) 
+    
+
+  
